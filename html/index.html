@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>short link</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <link href="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: block;
+    }
+    .row {
+      margin-top: 10px;
+    }
+    .btn {
+      float: right;
+      padding-right: 18px;
+    }
+    .container {
+    text-align: left;
+    width: 380px;
+    margin: 200px auto;
+    }
+    .content {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id='app' class='container'>
+    <h2 class="ui header">短连接生成测试</h2>
+    <div class='content'>
+      <div class="row ui input">
+        <input v-model="url" type="text" placeholder="http(s)://" size="45">
+      </div>
+      <div class='row'>
+          CUSTOM: {{ LOCALPRE }}
+          <div class="ui input">
+            <input v-model="alias" type="text" maxlength="10" size="12">
+          </div>[A-Za-z0-9_]
+      </div>
+      <div class="row btn ui input">
+        <button v-on:click="genr()" class="ui primary button">generate</button>
+      </div>
+    </div>
+    <div class="footer">
+      <h3>{{ message }}</h3>
+    </div>
+  </div>
+</body>
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      LOCALPRE: 'http://tolnk.cn/',
+      message: '',
+      url: '',
+      url_b64: '',
+      alias: '',
+    },
+    methods: {
+      genr: function() {
+
+this.message = 'waiting...';
+this.url_b64 = btoa(this.url);
+if(this.url === ""){
+  this.message = 'url不可为空';
+  return
+}
+var url = 'create.php?url=' + this.url_b64;
+if(this.alias != ""){url = url + '&alias=' + this.alias}
+axios.get(url)
+.then((rep)=>{
+  var data = rep.data;
+  if(data.result === "OK"){
+    this.message = data.data.tinyurl
+  }else{
+    this.message = data.data
+  }
+})
+.catch(()=>{
+  this.message = '请求服务器失败'
+});
+      },
+    }
+  })
+</script>
+</html>
