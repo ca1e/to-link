@@ -46,7 +46,8 @@ func (r *Redigo)Store(k, v string) error {
 	println("set redis:", vr)
 	if err != nil {
 	  return err
-	}
+    }
+    c.Do("EXPIRE", k, 60*60*24*30)
 	leng, err := redis.Int64(c.Do("dbsize"))
 	if err != nil {
 	  return err
