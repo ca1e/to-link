@@ -5,9 +5,9 @@ import (
     "net/http"
     "runtime"
     "regexp"
-    "./config"
-    "./murshort"
-    "./kvstore"
+    "tolnk/config"
+    "tolnk/murshort"
+    "tolnk/kvstore"
     "github.com/gin-gonic/gin"
 )
 
