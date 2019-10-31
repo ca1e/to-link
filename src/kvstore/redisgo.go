@@ -11,6 +11,7 @@ type Redigo struct{
 var (
 	MAX_POOL_SIZE = 20
 	redisPoll chan redis.Conn 
+	redisAddr = "redis:6379"
 )
 
 func putRedis(conn redis.Conn) {
@@ -41,7 +42,7 @@ func initRedis(network, address string) redis.Conn {
 }
 
 func (r *Redigo)Store(k, v string) error {
-	c := initRedis("tcp", "127.0.0.1:6379")
+	c := initRedis("tcp", redisAddr)
 	vr, err := c.Do("set", k, v)
 	println("set redis:", vr)
 	if err != nil {
@@ -57,7 +58,7 @@ func (r *Redigo)Store(k, v string) error {
 }
 
 func (r *Redigo)Exist(k string) (string,bool){
-	c := initRedis("tcp", "127.0.0.1:6379")
+	c := initRedis("tcp", redisAddr)
 	ok, _ := redis.Int64(c.Do("exists", k))
 	v, _ := redis.String(c.Do("get", k))
 	return v, (ok==1)
