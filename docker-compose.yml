@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+    redis:
+        image: redis:alpine
+        restart: always
+        networks:
+            - tolnk-network
+    tolnk:
+        image: combo/tolnk
+        restart: always
+        networks:
+            - tolnk-network
+        ports:
+            - "127.0.0.1:82:8080"
+
+
+networks:
+    tolnk-network:
+        driver: bridge
