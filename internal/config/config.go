@@ -11,8 +11,8 @@ type configuration struct {
 	LocalUrl string `json:"localurl"`
 }
 
-func init(){
-	file, _ := os.Open("../conf/config.json")
+func init() {
+	file, _ := os.Open("conf/config.json")
 	defer file.Close()
 
 	decoder := json.NewDecoder(file)
