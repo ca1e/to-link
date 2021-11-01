@@ -8,7 +8,8 @@ import (
 var Conf = configuration{}
 
 type configuration struct {
-	LocalUrl string `json:"localurl"`
+	LocalUrl   string `json:"localurl"`
+	RedisAddrs string `json:"redis_addrss"`
 }
 
 func init() {
