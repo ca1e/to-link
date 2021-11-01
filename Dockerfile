@@ -6,7 +6,8 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o app
 
 FROM alpine:latest as prod
 WORKDIR /root/
-COPY to-link/ .
+COPY --from=0 /go/src/to-link/conf ./bin/conf
+COPY --from=0 /go/src/to-link/static ./bin/static
 COPY --from=0 /go/src/to-link/app ./bin/
 # ENV GIN_MODE=release
 WORKDIR /root/bin
