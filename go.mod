@@ -3,7 +3,7 @@ module github.com/ca1e/to-link
 go 1.17
 
 require (
-	github.com/gin-gonic/gin v1.7.4
+	github.com/gin-gonic/gin v1.7.7
 	github.com/gomodule/redigo v1.8.5
 	github.com/spaolacci/murmur3 v1.1.0
 )
